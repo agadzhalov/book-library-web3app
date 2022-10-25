@@ -12,7 +12,7 @@ const PendingTX = ({tx} : PendingTXProps) => {
     <div>
       { tx.status && (
         <div>
-          <p>TX is pending</p>
+          <p><h1>TX is pending</h1></p>
           <p>
           <a
           {...{
