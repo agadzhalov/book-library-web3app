@@ -4,7 +4,7 @@
   }
   export const walletConnectSupportedNetworks: Networks = {
     // Add your network rpc URL here
-    1: "https://ethereumnode.defiterm.io",
+    1: "https://eth-goerli.g.alchemy.com/v2/b3s6jS5xYcnRbWxRrN1K80kVJ2a-4_wx",
     3: "https://ethereumnode.defiterm-dev.net"
   };
 
@@ -12,4 +12,4 @@
   export const supportedMetamaskNetworks = [1, 3, 4, 5, 42];
 
   export const ALBT_TOKEN_ADDRESS = "0xc6869a93ef55e1d8ec8fdcda89c9d93616cf0a72";
-  export const US_ELECTION_ADDRESS = "0x766A8bF147D44677Bf9ca30977F6E966CeAF6771";
+  export const BOOK_UTILS_ADDRESS = "0xbAFa637b2d822974EAaE803f1236811AeC1090D5";

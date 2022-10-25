@@ -2,10 +2,10 @@ import { useWeb3React } from "@web3-react/core";
 import Head from "next/head";
 import Link from "next/link";
 import Account from "../components/Account";
+import BookLibrary from "../components/BookLibrary";
 import NativeCurrencyBalance from "../components/NativeCurrencyBalance";
 import TokenBalance from "../components/TokenBalance";
-import USLibrary from "../components/USLibrary";
-import { ALBT_TOKEN_ADDRESS, US_ELECTION_ADDRESS } from "../constants";
+import { ALBT_TOKEN_ADDRESS, BOOK_UTILS_ADDRESS } from "../constants";
 import useEagerConnect from "../hooks/useEagerConnect";
 
 function Home() {
@@ -35,8 +35,8 @@ function Home() {
       <main>
         <h1>
           Welcome to{" "}
-          <a href="https://github.com/LimeChain/next-web3-boilerplate">
-            LimeAcademy-boilerplate
+          <a href="https://github.com/agadzhalov/LimeAcademy">
+            BookLibrary
           </a>
         </h1>
 
@@ -45,7 +45,7 @@ function Home() {
             <NativeCurrencyBalance />
 
             <TokenBalance tokenAddress={ALBT_TOKEN_ADDRESS} symbol="ALBT" />
-            <USLibrary contractAddress={US_ELECTION_ADDRESS} />
+            <BookLibrary contractAddress={BOOK_UTILS_ADDRESS} />
           </section>
         )}
       </main>
