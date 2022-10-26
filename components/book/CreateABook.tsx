@@ -10,49 +10,44 @@ type BookUtilsContract = {
 const CreateABook = ({ contractAddress, updateTxStatus }: BookUtilsContract) => {
   const bookUtilsContract = useBookUtilsContract(contractAddress);
 
-  const [allBooks, setAllBooks] = useState<BookStruct[] | undefined>();
-
   const [bookName, setBookName] = useState<string | undefined>();
   const [bookAuthor, setBookAuthor] = useState<string | undefined>();
   const [bookCopies, setBookCopies] = useState<number | undefined>();
 
-  useEffect(() => {
-    getAvailableBooks();
-  },[])
+    useEffect(() => {}, [])
 
-
-  const getAvailableBooks = async () => {
-    const booksArr : BookStruct[] = await bookUtilsContract.showAvailableBooks()
-    setAllBooks(booksArr);
-  }
-
-  const stateBookName = (input) => {
-    setBookName(input.target.value)
-  }
-
-  const stateBookAuthor = (input) => {
-    setBookAuthor(input.target.value)
-  }
-
-  const stateBookCopies = (input) => {
-    setBookCopies(input.target.value)
-  }
-
-  const submitCreateNewBook = async () => {
-    try {
-        const tx = await bookUtilsContract.addNewBook(bookName, bookAuthor, bookCopies);
-        updateTxStatus({hash: tx.hash, status: true});
-        await tx.wait();
-        updateTxStatus({hash: tx.hash, status: false});
-    } catch (error) {
-        console.log(error)
+    const stateBookName = (input) => {
+        setBookName(input.target.value)
     }
 
-  }
+    const stateBookAuthor = (input) => {
+        setBookAuthor(input.target.value)
+    }
+
+    const stateBookCopies = (input) => {
+        setBookCopies(input.target.value)
+    }
+
+    const submitCreateNewBook = async () => {
+        try {
+            const tx = await bookUtilsContract.addNewBook(bookName, bookAuthor, bookCopies);
+            updateTxStatus({ hash: tx.hash, status: true });
+            await tx.wait();
+            updateTxStatus({ hash: tx.hash, status: false });
+            resetForm();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const resetForm = async () => {
+        setBookName('');
+        setBookAuthor('');
+        setBookCopies(0);
+    }
 
   return (
     <div className="results-form">
-
           <div className="create-book">
               <h3>Create new book</h3>
               <form>
