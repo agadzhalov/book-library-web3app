@@ -6,7 +6,7 @@ type BookUtilsContract = {
   updateTxStatus: any;
 };
 
-const BorrowABook = ({ contractAddress, updateTxStatus }: BookUtilsContract) => {
+const ReturnABook = ({ contractAddress, updateTxStatus }: BookUtilsContract) => {
   const bookUtilsContract = useBookUtilsContract(contractAddress);
 
   const [bookHashId, setBookHashId] = useState<string | undefined>();
@@ -17,9 +17,9 @@ const BorrowABook = ({ contractAddress, updateTxStatus }: BookUtilsContract) => 
         setBookHashId(input.target.value)
     }
 
-    const submitBorrowABook = async () => {
+    const submitReturnABook = async () => {
         try {
-            const tx = await bookUtilsContract.borrowABook(bookHashId);
+            const tx = await bookUtilsContract.returnBook(bookHashId);
             updateTxStatus({ hash: tx.hash, status: true });
             await tx.wait().then(() => {
                 updateTxStatus({ hash: tx.hash, status: false });
@@ -37,13 +37,13 @@ const BorrowABook = ({ contractAddress, updateTxStatus }: BookUtilsContract) => 
   return (
     <div className="results-form">
           <div className="create-book">
-              <h3>Borrow a book by hash ID</h3>
+              <h3>Return a book by hash ID</h3>
               <form>
                   <label>
                       ID:
                       <input onChange={stateHashId} value={bookHashId} type="text" className="hashId" name="book_name" />
                   </label>
-                  <button onClick={submitBorrowABook} type="button">Borrow a book</button>
+                  <button onClick={submitReturnABook} type="button">Return a book</button>
               </form>
           </div>
         
@@ -84,4 +84,4 @@ const BorrowABook = ({ contractAddress, updateTxStatus }: BookUtilsContract) => 
   );
 };
 
-export default BorrowABook;
+export default ReturnABook;

@@ -7,6 +7,7 @@ import AvailableBooksList from "./AvailableBooksList";
 import BorrowABook from "./BorrowABook";
 import CreateABook from "./CreateABook";
 import EventListener from "./EventListener";
+import ReturnABook from "./ReturnABook";
 
 type BookUtilsContract = {
   contractAddress: string;
@@ -46,6 +47,7 @@ const BookLibrary = ({ contractAddress }: BookUtilsContract) => {
                 <div>
                     <CreateABook contractAddress={contractAddress} updateTxStatus={setTxStatus}  />
                     <BorrowABook contractAddress={contractAddress} updateTxStatus={setTxStatus}  />
+                    <ReturnABook contractAddress={contractAddress} updateTxStatus={setTxStatus}  />
                     <AvailableBooksList contractAddress={contractAddress} />
                 </div>
             ) : (
