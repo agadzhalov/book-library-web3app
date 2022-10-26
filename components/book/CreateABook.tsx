@@ -31,8 +31,9 @@ const CreateABook = ({ contractAddress, updateTxStatus }: BookUtilsContract) => 
         try {
             const tx = await bookUtilsContract.addNewBook(bookName, bookAuthor, bookCopies);
             updateTxStatus({ hash: tx.hash, status: true });
-            await tx.wait();
-            updateTxStatus({ hash: tx.hash, status: false });
+            await tx.wait().then(() => {
+                updateTxStatus({ hash: tx.hash, status: false });
+            });
             resetForm();
         } catch (error) {
             console.log(error)
