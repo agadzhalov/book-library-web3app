@@ -2,7 +2,7 @@ import { useWeb3React } from "@web3-react/core";
 import Head from "next/head";
 import Link from "next/link";
 import Account from "../components/Account";
-import BookLibrary from "../components/BookLibrary";
+import BookLibrary from "../components/book/BookLibrary";
 import NativeCurrencyBalance from "../components/NativeCurrencyBalance";
 import TokenBalance from "../components/TokenBalance";
 import { ALBT_TOKEN_ADDRESS, BOOK_UTILS_ADDRESS } from "../constants";
