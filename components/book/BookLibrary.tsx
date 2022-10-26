@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import useBookUtilsContract from "../../hooks/useBookUtilsContract";
 import PendingTX from "../PendingTX";
 import AvailableBooksList from "./AvailableBooksList";
+import BorrowABook from "./BorrowABook";
 import CreateABook from "./CreateABook";
 import EventListener from "./EventListener";
 
@@ -44,6 +45,7 @@ const BookLibrary = ({ contractAddress }: BookUtilsContract) => {
         {!txStatus.status ? (
                 <div>
                     <CreateABook contractAddress={contractAddress} updateTxStatus={setTxStatus}  />
+                    <BorrowABook contractAddress={contractAddress} updateTxStatus={setTxStatus}  />
                     <AvailableBooksList contractAddress={contractAddress} />
                 </div>
             ) : (
