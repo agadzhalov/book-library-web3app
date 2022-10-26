@@ -17,7 +17,7 @@ const BorrowABook = ({ contractAddress, updateTxStatus }: BookUtilsContract) => 
         setBookHashId(input.target.value)
     }
 
-    const submitCreateNewBook = async () => {
+    const submitBorrowABook = async () => {
         try {
             const tx = await bookUtilsContract.borrowABook(bookHashId);
             updateTxStatus({ hash: tx.hash, status: true });
@@ -43,7 +43,7 @@ const BorrowABook = ({ contractAddress, updateTxStatus }: BookUtilsContract) => 
                       ID:
                       <input onChange={stateBookName} value={bookHashId} type="text" className="hashId" name="book_name" />
                   </label>
-                  <button onClick={submitCreateNewBook} type="button">Borrow a book</button>
+                  <button onClick={submitBorrowABook} type="button">Borrow a book</button>
               </form>
           </div>
         
