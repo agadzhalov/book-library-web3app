@@ -21,12 +21,19 @@ const BookLibrary = ({ contractAddress }: BookUtilsContract) => {
 
   useEffect(() => {
     getAvailableBooks();
+    listenBookAddedEvent();
   },[])
 
 
   const getAvailableBooks = async () => {
     const booksArr : BookStruct[] = await bookUtilsContract.showAvailableBooks()
     setAllBooks(booksArr);
+  }
+
+  const listenBookAddedEvent = async () => {
+    bookUtilsContract.on('BookAddedEvent', (name, author, copies, tx) => {
+        getAvailableBooks();
+    });
   }
 
   const stateBookName = (input) => {
