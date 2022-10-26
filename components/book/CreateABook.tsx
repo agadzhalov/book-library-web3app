@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { BookStruct } from "../../contracts/types/BookUtils";
 import useBookUtilsContract from "../../hooks/useBookUtilsContract";
 
 type BookUtilsContract = {
