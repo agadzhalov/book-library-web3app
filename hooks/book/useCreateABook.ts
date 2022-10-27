@@ -12,6 +12,7 @@ const useCreateABook = (contract: BookUtils) => {
             setIsLoading(true);
             setTxHash(tx.hash);
             await tx.wait();
+            setError(false);
         } catch (error) {
             setError(error);
         } finally {

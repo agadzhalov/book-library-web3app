@@ -33,14 +33,13 @@ const BookLibrary = ({ contractAddress }: BookUtilsContract) => {
 
   return (
     <div className="results-form">
-      {/* <EventListener eventData={event} setEvent={setEvent} /> */}
-        {!isCreateLoading && (<CreateABook handleCreateNewBook={createABook} error={createError}  />) }
+        {!isCreateLoading && (<CreateABook handleCreateNewBook={createABook} error={JSON.stringify(createError)}  />) }
         {isCreateLoading && (<PendingTX txHash={createHash} />)}
 
-        {!isBorrowLoading && (<BorrowABook handleBorrowABook={borrowABook}  />) }
+        {!isBorrowLoading && (<BorrowABook handleBorrowABook={borrowABook} />) }
         {isBorrowLoading && (<PendingTX txHash={borrowHash} />)}
 
-        {!isReturnLoading && (<ReturnABook handleReturnABook={returnABook}  />) }
+        {!isReturnLoading && (<ReturnABook handleReturnABook={returnABook} />) }
         {isReturnLoading && (<PendingTX txHash={returnHash} />)}
 
         <AvailableBooksList allBooks={allBooks} />

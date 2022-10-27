@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Error from "./template/Error";
 
 type BookUtilsContract = {
   handleCreateNewBook: any;
@@ -11,25 +12,27 @@ const CreateABook = ({ handleCreateNewBook, error }: BookUtilsContract) => {
   const [bookAuthor, setBookAuthor] = useState<string | undefined>();
   const [bookCopies, setBookCopies] = useState<number | undefined>();
 
-    useEffect(() => {}, [])
+  useEffect(() => {
 
-    const stateBookName = (input) => {
-        setBookName(input.target.value)
-    }
+  }, [])
 
-    const stateBookAuthor = (input) => {
-        setBookAuthor(input.target.value)
-    }
+  const stateBookName = (input) => {
+    setBookName(input.target.value)
+  }
 
-    const stateBookCopies = (input) => {
-        setBookCopies(input.target.value)
-    }
+  const stateBookAuthor = (input) => {
+    setBookAuthor(input.target.value)
+  }
 
-    const resetForm = async () => {
-        setBookName('');
-        setBookAuthor('');
-        setBookCopies(0);
-    }
+  const stateBookCopies = (input) => {
+    setBookCopies(input.target.value)
+  }
+
+  const resetForm = async () => {
+    setBookName('');
+    setBookAuthor('');
+    setBookCopies(0);
+  }
 
   return (
     <div className="results-form">
@@ -51,7 +54,8 @@ const CreateABook = ({ handleCreateNewBook, error }: BookUtilsContract) => {
                 <button onClick={() => handleCreateNewBook(bookName, bookAuthor, bookCopies)} type="button">Create new book</button>
               </form>
           </div>
-        
+          
+          <Error error={error} />
     <style jsx>{`
         .results-form {
           display: flex;
