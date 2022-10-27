@@ -17,7 +17,7 @@ const AvailableBooksList = ({ contractAddress }: BookUtilsContract) => {
   },[])
 
   const getAvailableBooks = async () => {
-    const booksArr : BookStruct[] = await bookUtilsContract.showAvailableBooks()
+    const booksArr : BookStruct[] = await bookUtilsContract.showAvailableBooks();
     setAllBooks(booksArr);
   }
 

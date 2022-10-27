@@ -2,6 +2,7 @@ import type { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
 import useBookUtilsContract from "../../hooks/useBookUtilsContract";
+import useCreateABook from "../../hooks/book/useCreateABook";
 import PendingTX from "../PendingTX";
 import AvailableBooksList from "./AvailableBooksList";
 import BorrowABook from "./BorrowABook";
@@ -17,8 +18,11 @@ const BookLibrary = ({ contractAddress }: BookUtilsContract) => {
   const bookUtilsContract = useBookUtilsContract(contractAddress);
 
   const { account, library } = useWeb3React<Web3Provider>();
-  const [txStatus, setTxStatus] = useState<any | undefined>({ hash: '', status: false });
+  //const [txHash, setTxHash] = useState<string | undefined>();
   const [event, setEvent] = useState<any | undefined>({ title: '', data: {}, status: false });
+  //const [isLoading, setIsLoading] = useState<boolean | undefined>(false);
+
+  const { createABook, txHash, isLoading, error } = useCreateABook(bookUtilsContract);
 
   useEffect(() => {
     //listenBookAddedEvent();
@@ -42,17 +46,18 @@ const BookLibrary = ({ contractAddress }: BookUtilsContract) => {
   
   return (
     <div className="results-form">
-      <EventListener eventData={event} setEvent={setEvent} />
-        {!txStatus.status ? (
+      {/* <EventListener eventData={event} setEvent={setEvent} /> */}
+        {!isLoading && (
                 <div>
-                    <CreateABook contractAddress={contractAddress} updateTxStatus={setTxStatus}  />
-                    <BorrowABook contractAddress={contractAddress} updateTxStatus={setTxStatus}  />
-                    <ReturnABook contractAddress={contractAddress} updateTxStatus={setTxStatus}  />
+                    <CreateABook handleCreateNewBook={createABook}  />
+                    {/* <BorrowABook contractAddress={contractAddress} updateTxStatus={setTxStatus}  />
+                    <ReturnABook contractAddress={contractAddress} updateTxStatus={setTxStatus}  /> */}
+                    
                     <AvailableBooksList contractAddress={contractAddress} />
                 </div>
-            ) : (
-                <PendingTX tx={txStatus} />
-            )}
+            ) 
+        }
+        {isLoading && (<PendingTX txHash={txHash} />)}
     <style jsx>{`
         .results-form {
           display: flex;

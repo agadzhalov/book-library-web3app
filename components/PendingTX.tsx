@@ -2,26 +2,26 @@ import { useWeb3React } from "@web3-react/core";
 import { formatEtherscanLink } from "../util";
 
 type PendingTXProps = {
-  tx: any;
+  txHash: string;
 };
 
-const PendingTX = ({tx} : PendingTXProps) => {
+const PendingTX = ({txHash} : PendingTXProps) => {
   const { chainId } = useWeb3React();
 
   return (
     <div>
-      { tx.status && (
+      { txHash && (
         <div>
           <h1>TX is pending</h1>
           <p>
           <a
           {...{
-            href: formatEtherscanLink("Transaction", [chainId, tx.hash]),
+            href: formatEtherscanLink("Transaction", [chainId, txHash]),
             target: "_blank",
             rel: "noopener noreferrer",
           }}
           >
-            {tx.hash}
+            {txHash}
           </a>
           </p>
         </div>
