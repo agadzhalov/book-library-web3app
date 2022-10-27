@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import useBookUtilsContract from "../../hooks/useBookUtilsContract";
+import Error from "./template/Error";
 
 type BorrowABookProps = {
   handleBorrowABook: any;
+  error: any;
 };
 
-const BorrowABook = ({ handleBorrowABook }: BorrowABookProps) => {
+const BorrowABook = ({ handleBorrowABook, error }: BorrowABookProps) => {
     const [bookHashId, setBookHashId] = useState<string | undefined>();
 
     useEffect(() => {}, [])
@@ -25,18 +26,10 @@ const BorrowABook = ({ handleBorrowABook }: BorrowABookProps) => {
                   </label>
                   <button onClick={() => handleBorrowABook(bookHashId)} type="button">Borrow a book</button>
               </form>
+              <Error error={error} />
           </div>
           
     <style jsx>{`
-        .results-form {
-          display: flex;
-          flex-direction: column;
-        }
-
-        .button-wrapper {
-          margin: 20px;
-        }
-        
         .hashId {
             width: 60%;
         }
@@ -45,18 +38,6 @@ const BorrowABook = ({ handleBorrowABook }: BorrowABookProps) => {
             width: 50%;
             margin: 0 auto;
             text-align: left;
-        }
-
-        table {
-            width: 100%;
-        }
-
-        table tr {
-            background: #ffffff;
-        }
-
-        table td {
-            border: 1px solid #000000;
         }
 
       `}</style>

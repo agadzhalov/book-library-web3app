@@ -13,6 +13,7 @@ const useReturnABook = (contract: BookUtils) => {
             setIsLoading(true);
             setTxHash(tx.hash);
             await tx.wait();
+            setError(null);
         } catch (error) {
             setError(error);
         } finally {

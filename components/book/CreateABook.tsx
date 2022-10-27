@@ -53,35 +53,13 @@ const CreateABook = ({ handleCreateNewBook, error }: BookUtilsContract) => {
                   </label>
                 <button onClick={() => handleCreateNewBook(bookName, bookAuthor, bookCopies)} type="button">Create new book</button>
               </form>
+              <Error error={error} />
           </div>
-          
-          <Error error={error} />
     <style jsx>{`
-        .results-form {
-          display: flex;
-          flex-direction: column;
-        }
-
-        .button-wrapper {
-          margin: 20px;
-        }
-        
         .books, .create-book {
             width: 50%;
             margin: 0 auto;
             text-align: left;
-        }
-
-        table {
-            width: 100%;
-        }
-
-        table tr {
-            background: #ffffff;
-        }
-
-        table td {
-            border: 1px solid #000000;
         }
 
       `}</style>

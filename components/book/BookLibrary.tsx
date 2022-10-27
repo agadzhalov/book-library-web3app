@@ -36,42 +36,13 @@ const BookLibrary = ({ contractAddress }: BookUtilsContract) => {
         {!isCreateLoading && (<CreateABook handleCreateNewBook={createABook} error={JSON.stringify(createError)}  />) }
         {isCreateLoading && (<PendingTX txHash={createHash} />)}
 
-        {!isBorrowLoading && (<BorrowABook handleBorrowABook={borrowABook} />) }
+        {!isBorrowLoading && (<BorrowABook handleBorrowABook={borrowABook} error={JSON.stringify(borrowError)} />) }
         {isBorrowLoading && (<PendingTX txHash={borrowHash} />)}
 
-        {!isReturnLoading && (<ReturnABook handleReturnABook={returnABook} />) }
+        {!isReturnLoading && (<ReturnABook handleReturnABook={returnABook} error={JSON.stringify(returnError)} />) }
         {isReturnLoading && (<PendingTX txHash={returnHash} />)}
 
         <AvailableBooksList allBooks={allBooks} />
-    <style jsx>{`
-        .results-form {
-          display: flex;
-          flex-direction: column;
-        }
-
-        .button-wrapper {
-          margin: 20px;
-        }
-        
-        .books, .create-book {
-            width: 50%;
-            margin: 0 auto;
-            text-align: left;
-        }
-
-        table {
-            width: 100%;
-        }
-
-        table tr {
-            background: #ffffff;
-        }
-
-        table td {
-            border: 1px solid #000000;
-        }
-
-      `}</style>
     </div>
   );
 };
