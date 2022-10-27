@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import useBookUtilsContract from "../../hooks/useBookUtilsContract";
 
-type BookUtilsContract = {
-  contractAddress: string;
-  updateTxStatus: any;
+type ReturnABookProps = {
+    handleReturnABook: any;
 };
 
-const ReturnABook = ({ contractAddress, updateTxStatus }: BookUtilsContract) => {
-  const bookUtilsContract = useBookUtilsContract(contractAddress);
+const ReturnABook = ({ handleReturnABook }: ReturnABookProps) => {
 
   const [bookHashId, setBookHashId] = useState<string | undefined>();
 
@@ -15,23 +13,6 @@ const ReturnABook = ({ contractAddress, updateTxStatus }: BookUtilsContract) => 
 
     const stateHashId = (input) => {
         setBookHashId(input.target.value)
-    }
-
-    const submitReturnABook = async () => {
-        try {
-            const tx = await bookUtilsContract.returnBook(bookHashId);
-            updateTxStatus({ hash: tx.hash, status: true });
-            await tx.wait().then(() => {
-                updateTxStatus({ hash: tx.hash, status: false });
-            });
-            resetForm();
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    const resetForm = async () => {
-        setBookHashId('');
     }
 
   return (
@@ -43,7 +24,7 @@ const ReturnABook = ({ contractAddress, updateTxStatus }: BookUtilsContract) => 
                       ID:
                       <input onChange={stateHashId} value={bookHashId} type="text" className="hashId" name="book_name" />
                   </label>
-                  <button onClick={submitReturnABook} type="button">Return a book</button>
+                  <button onClick={() => handleReturnABook(bookHashId)} type="button">Return a book</button>
               </form>
           </div>
         

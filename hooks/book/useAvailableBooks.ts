@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { BookStruct } from "../../contracts/types/BookUtils";
+import { BookStruct, BookUtils } from "../../contracts/types/BookUtils";
 
-const useAvailableBooks = (contract: any) => {
+const useAvailableBooks = (contract: BookUtils) => {
     const [allBooks, setAllBooks] = useState<BookStruct[] | undefined>();
 
     useEffect(() => {

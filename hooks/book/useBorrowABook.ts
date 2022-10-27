@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { BookUtils } from "../../contracts/types";
 
-const useBorrowABook = (contract: any) => {
+const useBorrowABook = (contract: BookUtils) => {
     const [txHash, setTxHash] = useState<string | undefined>();
     const [isLoading, setIsLoading] = useState<boolean | undefined>(false);
     const [error, setError] = useState<any | undefined>();

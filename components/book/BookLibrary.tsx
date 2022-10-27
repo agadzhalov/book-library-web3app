@@ -11,6 +11,7 @@ import EventListener from "./EventListener";
 import ReturnABook from "./ReturnABook";
 import useAvailableBooks from "../../hooks/book/useAvailableBooks";
 import useBorrowABook from "../../hooks/book/useBorrowABook";
+import useReturnABook from "../../hooks/book/useReturnABook";
 
 type BookUtilsContract = {
   contractAddress: string;
@@ -22,9 +23,10 @@ const BookLibrary = ({ contractAddress }: BookUtilsContract) => {
   const { account, library } = useWeb3React<Web3Provider>();
   const [event, setEvent] = useState<any | undefined>({ title: '', data: {}, status: false });
 
+  const { allBooks } = useAvailableBooks(bookUtilsContract);
   const { createABook, txHash: createHash, isLoading: isCreateLoading, error: createError } = useCreateABook(bookUtilsContract);
   const { borrowABook, txHash: borrowHash, isLoading: isBorrowLoading, error: borrowError } = useBorrowABook(bookUtilsContract);
-  const { allBooks } = useAvailableBooks(bookUtilsContract);
+  const { returnABook, txHash: returnHash, isLoading: isReturnLoading, error: returnError } = useReturnABook(bookUtilsContract);
 
   useEffect(() => {
     //listenBookAddedEvent();
@@ -54,6 +56,9 @@ const BookLibrary = ({ contractAddress }: BookUtilsContract) => {
 
         {!isBorrowLoading && (<BorrowABook handleBorrowABook={borrowABook}  />) }
         {isBorrowLoading && (<PendingTX txHash={borrowHash} />)}
+
+        {!isReturnLoading && (<ReturnABook handleReturnABook={returnABook}  />) }
+        {isReturnLoading && (<PendingTX txHash={returnHash} />)}
 
         <AvailableBooksList allBooks={allBooks} />
     <style jsx>{`

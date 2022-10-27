@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { BookUtils } from "../../contracts/types";
 
-const useCreateABook = (contract: BookUtils) => {
+const useReturnABook = (contract: BookUtils) => {
     const [txHash, setTxHash] = useState<string | undefined>();
     const [isLoading, setIsLoading] = useState<boolean | undefined>(false);
     const [error, setError] = useState<any | undefined>();
 
-    const createABook = async(bookName: string, bookAuthor: string, bookCopies: number) => {
+    const returnABook = async(hashId: string) => {
         try {
-            const tx = await contract.addNewBook(bookName, bookAuthor, bookCopies);
+            console.log('vlizai')
+            const tx = await contract.returnBook(hashId);
             setIsLoading(true);
             setTxHash(tx.hash);
             await tx.wait();
@@ -19,7 +20,7 @@ const useCreateABook = (contract: BookUtils) => {
         }
     }
     
-    return { createABook, txHash, isLoading, error };
+    return { returnABook, txHash, isLoading, error };
 }
 
-export default useCreateABook;
+export default useReturnABook;
