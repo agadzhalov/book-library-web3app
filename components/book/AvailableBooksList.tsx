@@ -1,32 +1,8 @@
-import { useEffect, useState } from "react";
-import { BookStruct } from "../../contracts/types/BookUtils";
-import useBookUtilsContract from "../../hooks/useBookUtilsContract";
-
-type BookUtilsContract = {
-  contractAddress: string;
+type AvailableBooks = {
+  allBooks: any;
 };
 
-const AvailableBooksList = ({ contractAddress }: BookUtilsContract) => {
-  const bookUtilsContract = useBookUtilsContract(contractAddress);
-
-  const [allBooks, setAllBooks] = useState<BookStruct[] | undefined>();
-
-  useEffect(() => {
-    getAvailableBooks();
-    listenBookAddedEvent();
-  },[])
-
-  const getAvailableBooks = async () => {
-    const booksArr : BookStruct[] = await bookUtilsContract.showAvailableBooks();
-    setAllBooks(booksArr);
-  }
-
-  const listenBookAddedEvent = async () => {
-    bookUtilsContract.on('BookAddedEvent', (name, author, copies, tx) => {
-      getAvailableBooks();
-    });
-  }
-
+const AvailableBooksList = ({ allBooks }: AvailableBooks) => {
   return (
     <div className="results-form">
       <div className="books">

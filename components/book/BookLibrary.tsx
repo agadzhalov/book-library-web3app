@@ -9,6 +9,7 @@ import BorrowABook from "./BorrowABook";
 import CreateABook from "./CreateABook";
 import EventListener from "./EventListener";
 import ReturnABook from "./ReturnABook";
+import useAvailableBooks from "../../hooks/book/useAvailableBooks";
 
 type BookUtilsContract = {
   contractAddress: string;
@@ -23,6 +24,7 @@ const BookLibrary = ({ contractAddress }: BookUtilsContract) => {
   //const [isLoading, setIsLoading] = useState<boolean | undefined>(false);
 
   const { createABook, txHash, isLoading, error } = useCreateABook(bookUtilsContract);
+  const { allBooks } = useAvailableBooks(bookUtilsContract);
 
   useEffect(() => {
     //listenBookAddedEvent();
@@ -53,7 +55,7 @@ const BookLibrary = ({ contractAddress }: BookUtilsContract) => {
                     {/* <BorrowABook contractAddress={contractAddress} updateTxStatus={setTxStatus}  />
                     <ReturnABook contractAddress={contractAddress} updateTxStatus={setTxStatus}  /> */}
                     
-                    <AvailableBooksList contractAddress={contractAddress} />
+                    <AvailableBooksList allBooks={allBooks} />
                 </div>
             ) 
         }
