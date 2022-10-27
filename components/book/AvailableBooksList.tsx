@@ -17,7 +17,7 @@ const AvailableBooksList = ({ allBooks }: AvailableBooks) => {
             </tr>
             { allBooks && allBooks.map((book, i) => {
                 return (
-                  <tr key={i}>
+                  <tr key={i} className={book.copies > 0 ? 'available' : 'not-available'}>
                     <td>{book.id}</td>
                     <td>{book.name}</td>
                     <td>{book.author}</td>
@@ -54,6 +54,10 @@ const AvailableBooksList = ({ allBooks }: AvailableBooks) => {
 
         table td {
             border: 1px solid #000000;
+        }
+
+        .not-available td {
+          background: #ff6161;
         }
 
       `}</style>
