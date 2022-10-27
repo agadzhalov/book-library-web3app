@@ -10,6 +10,7 @@ import CreateABook from "./CreateABook";
 import EventListener from "./EventListener";
 import ReturnABook from "./ReturnABook";
 import useAvailableBooks from "../../hooks/book/useAvailableBooks";
+import useBorrowABook from "../../hooks/book/useBorrowABook";
 
 type BookUtilsContract = {
   contractAddress: string;
@@ -19,11 +20,10 @@ const BookLibrary = ({ contractAddress }: BookUtilsContract) => {
   const bookUtilsContract = useBookUtilsContract(contractAddress);
 
   const { account, library } = useWeb3React<Web3Provider>();
-  //const [txHash, setTxHash] = useState<string | undefined>();
   const [event, setEvent] = useState<any | undefined>({ title: '', data: {}, status: false });
-  //const [isLoading, setIsLoading] = useState<boolean | undefined>(false);
 
-  const { createABook, txHash, isLoading, error } = useCreateABook(bookUtilsContract);
+  const { createABook, txHash: createHash, isLoading: isCreateLoading, error: createError } = useCreateABook(bookUtilsContract);
+  const { borrowABook, txHash: borrowHash, isLoading: isBorrowLoading, error: borrowError } = useBorrowABook(bookUtilsContract);
   const { allBooks } = useAvailableBooks(bookUtilsContract);
 
   useEffect(() => {
@@ -49,17 +49,13 @@ const BookLibrary = ({ contractAddress }: BookUtilsContract) => {
   return (
     <div className="results-form">
       {/* <EventListener eventData={event} setEvent={setEvent} /> */}
-        {!isLoading && (
-                <div>
-                    <CreateABook handleCreateNewBook={createABook}  />
-                    {/* <BorrowABook contractAddress={contractAddress} updateTxStatus={setTxStatus}  />
-                    <ReturnABook contractAddress={contractAddress} updateTxStatus={setTxStatus}  /> */}
-                    
-                    <AvailableBooksList allBooks={allBooks} />
-                </div>
-            ) 
-        }
-        {isLoading && (<PendingTX txHash={txHash} />)}
+        {!isCreateLoading && (<CreateABook handleCreateNewBook={createABook}  />) }
+        {isCreateLoading && (<PendingTX txHash={createHash} />)}
+
+        {!isBorrowLoading && (<BorrowABook handleBorrowABook={borrowABook}  />) }
+        {isBorrowLoading && (<PendingTX txHash={borrowHash} />)}
+
+        <AvailableBooksList allBooks={allBooks} />
     <style jsx>{`
         .results-form {
           display: flex;

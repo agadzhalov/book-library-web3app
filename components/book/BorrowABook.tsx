@@ -1,37 +1,17 @@
 import { useEffect, useState } from "react";
 import useBookUtilsContract from "../../hooks/useBookUtilsContract";
 
-type BookUtilsContract = {
-  contractAddress: string;
-  updateTxStatus: any;
+type BorrowABookProps = {
+  handleBorrowABook: any;
 };
 
-const BorrowABook = ({ contractAddress, updateTxStatus }: BookUtilsContract) => {
-  const bookUtilsContract = useBookUtilsContract(contractAddress);
-
-  const [bookHashId, setBookHashId] = useState<string | undefined>();
+const BorrowABook = ({ handleBorrowABook }: BorrowABookProps) => {
+    const [bookHashId, setBookHashId] = useState<string | undefined>();
 
     useEffect(() => {}, [])
 
     const stateHashId = (input) => {
         setBookHashId(input.target.value)
-    }
-
-    const submitBorrowABook = async () => {
-        try {
-            const tx = await bookUtilsContract.borrowABook(bookHashId);
-            updateTxStatus({ hash: tx.hash, status: true });
-            await tx.wait().then(() => {
-                updateTxStatus({ hash: tx.hash, status: false });
-            });
-            resetForm();
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    const resetForm = async () => {
-        setBookHashId('');
     }
 
   return (
@@ -43,10 +23,10 @@ const BorrowABook = ({ contractAddress, updateTxStatus }: BookUtilsContract) => 
                       ID:
                       <input onChange={stateHashId} value={bookHashId} type="text" className="hashId" name="book_name" />
                   </label>
-                  <button onClick={submitBorrowABook} type="button">Borrow a book</button>
+                  <button onClick={() => handleBorrowABook(bookHashId)} type="button">Borrow a book</button>
               </form>
           </div>
-        
+          
     <style jsx>{`
         .results-form {
           display: flex;
