@@ -8,7 +8,6 @@ const useReturnABook = (contract: BookUtils) => {
 
     const returnABook = async(hashId: string) => {
         try {
-            console.log('vlizai')
             const tx = await contract.returnBook(hashId);
             setIsLoading(true);
             setTxHash(tx.hash);

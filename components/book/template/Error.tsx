@@ -8,12 +8,15 @@ const Error = ({ error }: ErrorProps) => {
     let formatedError = '';
     let parsedError = error !== undefined ? JSON.parse(error) : null;
     if (parsedError) {
+      console.log(error)
         if (parsedError.data) {
-            formatedError = parsedError.data.message;
+          formatedError = parsedError.data.message;
         } else if (parsedError.message) {
-            formatedError = parsedError.message;
+          formatedError = parsedError.message;
+        } else if (parsedError.error) {
+          formatedError = parsedError.error.message ? parsedError.error.message : 'unknown';
         } else {
-            formatedError = JSON.stringify(error);
+          formatedError = JSON.stringify(error);
         }
     }
 
