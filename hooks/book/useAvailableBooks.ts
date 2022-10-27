@@ -6,21 +6,14 @@ const useAvailableBooks = (contract: BookUtils) => {
 
     useEffect(() => {
         getAvailableBooks();
-        listenBookAddedEvent();
     },[])
 
     const getAvailableBooks = async () => {
         const booksArr : BookStruct[] = await contract.showAvailableBooks();
         setAllBooks(booksArr);
     }
-
-    const listenBookAddedEvent = async () => {
-        contract.on('BookAddedEvent', (name, author, copies, tx) => {
-          getAvailableBooks();
-        });
-    }
     
-    return { allBooks };
+    return { getAvailableBooks, allBooks };
 }
 
 export default useAvailableBooks;

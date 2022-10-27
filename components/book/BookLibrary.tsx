@@ -21,13 +21,21 @@ const BookLibrary = ({ contractAddress }: BookUtilsContract) => {
 
   const { account, library } = useWeb3React<Web3Provider>();
 
-  const { allBooks } = useAvailableBooks(bookUtilsContract);
+  const { getAvailableBooks, allBooks } = useAvailableBooks(bookUtilsContract);
   const { createABook, txHash: createHash, isLoading: isCreateLoading, error: createError } = useCreateABook(bookUtilsContract);
   const { borrowABook, txHash: borrowHash, isLoading: isBorrowLoading, error: borrowError } = useBorrowABook(bookUtilsContract);
   const { returnABook, txHash: returnHash, isLoading: isReturnLoading, error: returnError } = useReturnABook(bookUtilsContract);
 
   useEffect(() => {
-
+    bookUtilsContract.on('BookAddedEvent', (name, author, copies, tx) => {
+      getAvailableBooks();
+    });
+    bookUtilsContract.on('BookBorrowedEvent', (name, author, tx) => {
+      getAvailableBooks();
+    });
+    bookUtilsContract.on('BookReturnEvent', (name, author, tx) => {
+      getAvailableBooks();
+    });
   },[])
 
 
