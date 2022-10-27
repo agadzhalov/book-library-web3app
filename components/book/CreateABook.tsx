@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import useBookUtilsContract from "../../hooks/useBookUtilsContract";
 
 type BookUtilsContract = {
   handleCreateNewBook: any;
+  error: any;
 };
 
-const CreateABook = ({ handleCreateNewBook }: BookUtilsContract) => {
+const CreateABook = ({ handleCreateNewBook, error }: BookUtilsContract) => {
 
   const [bookName, setBookName] = useState<string | undefined>();
   const [bookAuthor, setBookAuthor] = useState<string | undefined>();

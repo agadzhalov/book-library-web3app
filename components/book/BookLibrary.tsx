@@ -7,7 +7,6 @@ import PendingTX from "../PendingTX";
 import AvailableBooksList from "./AvailableBooksList";
 import BorrowABook from "./BorrowABook";
 import CreateABook from "./CreateABook";
-import EventListener from "./EventListener";
 import ReturnABook from "./ReturnABook";
 import useAvailableBooks from "../../hooks/book/useAvailableBooks";
 import useBorrowABook from "../../hooks/book/useBorrowABook";
@@ -21,7 +20,6 @@ const BookLibrary = ({ contractAddress }: BookUtilsContract) => {
   const bookUtilsContract = useBookUtilsContract(contractAddress);
 
   const { account, library } = useWeb3React<Web3Provider>();
-  const [event, setEvent] = useState<any | undefined>({ title: '', data: {}, status: false });
 
   const { allBooks } = useAvailableBooks(bookUtilsContract);
   const { createABook, txHash: createHash, isLoading: isCreateLoading, error: createError } = useCreateABook(bookUtilsContract);
@@ -29,29 +27,14 @@ const BookLibrary = ({ contractAddress }: BookUtilsContract) => {
   const { returnABook, txHash: returnHash, isLoading: isReturnLoading, error: returnError } = useReturnABook(bookUtilsContract);
 
   useEffect(() => {
-    //listenBookAddedEvent();
+
   },[])
 
-  const listenBookAddedEvent = async() => {
-    bookUtilsContract.on('BookAddedEvent', (name, author, copies, tx) => {
-      const event = {
-        title: 'BookAddedEvent',
-        data: {
-          name: name,
-          author: author,
-          copies: copies,
-          tx: tx
-        },
-        status: true
-      };
-      setEvent(event);
-    });
-  }
-  
+
   return (
     <div className="results-form">
       {/* <EventListener eventData={event} setEvent={setEvent} /> */}
-        {!isCreateLoading && (<CreateABook handleCreateNewBook={createABook}  />) }
+        {!isCreateLoading && (<CreateABook handleCreateNewBook={createABook} error={createError}  />) }
         {isCreateLoading && (<PendingTX txHash={createHash} />)}
 
         {!isBorrowLoading && (<BorrowABook handleBorrowABook={borrowABook}  />) }
