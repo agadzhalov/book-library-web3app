@@ -11,6 +11,8 @@ import ReturnABook from "./ReturnABook";
 import useAvailableBooks from "../../hooks/book/useAvailableBooks";
 import useBorrowABook from "../../hooks/book/useBorrowABook";
 import useReturnABook from "../../hooks/book/useReturnABook";
+import { ethers } from "ethers";
+import { BOOK_UTILS_ADDRESS } from "../../constants";
 
 type BookUtilsContract = {
   contractAddress: string;
@@ -20,7 +22,7 @@ const BookLibrary = ({ contractAddress }: BookUtilsContract) => {
   const bookUtilsContract = useBookUtilsContract(contractAddress);
 
   const { account, library } = useWeb3React<Web3Provider>();
-
+  
   const { getAvailableBooks, allBooks } = useAvailableBooks(bookUtilsContract);
   const { createABook, txHash: createHash, isLoading: isCreateLoading, error: createError } = useCreateABook(bookUtilsContract);
   const { borrowABook, txHash: borrowHash, isLoading: isBorrowLoading, error: borrowError } = useBorrowABook(bookUtilsContract);
@@ -36,6 +38,7 @@ const BookLibrary = ({ contractAddress }: BookUtilsContract) => {
     bookUtilsContract.on('BookReturnEvent', (name, author, tx) => {
       getAvailableBooks();
     });
+    console.log(ethers.utils.isAddress(BOOK_UTILS_ADDRESS));
   },[])
 
 

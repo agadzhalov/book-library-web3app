@@ -1,8 +1,10 @@
 import { useWeb3React } from "@web3-react/core";
+import { ethers } from "ethers";
 import Head from "next/head";
 import Link from "next/link";
 import Account from "../components/Account";
 import BookLibrary from "../components/book/BookLibrary";
+import Error from "../components/book/template/Error";
 import NativeCurrencyBalance from "../components/NativeCurrencyBalance";
 import TokenBalance from "../components/TokenBalance";
 import { ALBT_TOKEN_ADDRESS, BOOK_UTILS_ADDRESS } from "../constants";
@@ -14,6 +16,8 @@ function Home() {
   const triedToEagerConnect = useEagerConnect();
 
   const isConnected = typeof account === "string" && !!library;
+
+  const invalidAddrMsg: string = JSON.stringify({message: "Not a valid Ethereum address"});
 
   return (
     <div>
@@ -45,7 +49,9 @@ function Home() {
             <NativeCurrencyBalance />
 
             <TokenBalance tokenAddress={ALBT_TOKEN_ADDRESS} symbol="ALBT" />
-            <BookLibrary contractAddress={BOOK_UTILS_ADDRESS} />
+            
+            {ethers.utils.isAddress(BOOK_UTILS_ADDRESS) && (<BookLibrary contractAddress={BOOK_UTILS_ADDRESS} />)}
+            {!ethers.utils.isAddress(BOOK_UTILS_ADDRESS) && (<Error error={invalidAddrMsg} />)}
           </section>
         )}
       </main>
